@@ -2,20 +2,119 @@ using UnityEngine;
 
 public class CatAI : MonoBehaviour
 {
+
+    public float moveSpeed = 5.0f;
+    public float changeDirectionInterval = 2.0f;
+
+    private Vector3 targetPosition;
+    private float timeSinceLastDirectionChange;
+    private float waitInterval;
+
+    private bool hitWall = false;
+
+    //private float timeSinceLastDirectionChange;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        MoveRandomly();
     }
 
     public void OnEncircled()
     {
 
     }
+
+    private void MoveRandomly()
+    {
+
+        if (hitWall)
+        {
+            PickTargetAwayFromWall();
+            //return;
+        }
+
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+
+        // Check if it's time to change direction
+        timeSinceLastDirectionChange += Time.deltaTime;
+        if (timeSinceLastDirectionChange >= changeDirectionInterval + waitInterval)
+        {
+            UpdateTargetPosition();
+        }
+    }
+
+    private void UpdateTargetPosition()
+    {
+        // Generate a new random target position within the bounds of your game world
+        float randomX = Random.Range(-10f, 10f); // 
+        float randomY = Random.Range(-10f, 10f); // 
+        targetPosition = new Vector3(randomX, randomY, 0f);
+
+        // Calculate the angle in degrees
+        float angle2 = Mathf.Atan2(targetPosition.y, targetPosition.x) * Mathf.Rad2Deg;
+
+
+        // Reset the timer for the next direction change
+        timeSinceLastDirectionChange = 0.0f;
+
+        hitWall = false;
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+
+        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.layer == LayerMask.NameToLayer("Walls"))
+        {
+            hitWall = true;
+            Debug.Log("Hit wall - stopping movement");
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            // Object moved away from wall, can resume movement
+            hitWall = false;
+        }
+    }
+
+    
+    private void PickTargetAwayFromWall()
+    {
+        Vector3 currentPos = transform.position;
+        Vector3 newTarget;
+        int attempts = 0;
+        int maxAttempts = 10;
+
+        do
+        {
+            // Generate random target
+            float randomX = Random.Range(-10f, 10f);
+            float randomY = Random.Range(-10f, 10f);
+            newTarget = new Vector3(randomX, randomY, 0f);
+            attempts++;
+        }
+        while (Vector3.Distance(currentPos, newTarget) < 3f && attempts < maxAttempts); // Ensure target is reasonably far away
+
+        targetPosition = newTarget;
+
+        // Calculate the angle in degrees
+        float angle2 = Mathf.Atan2(targetPosition.y, targetPosition.x) * Mathf.Rad2Deg;
+
+        // Reset the timer for the next direction change
+        timeSinceLastDirectionChange = 0.0f;
+
+        Debug.Log("Moving away from wall to new target");
+    }
+
 }
