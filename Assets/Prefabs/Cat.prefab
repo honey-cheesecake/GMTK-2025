@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 3694371853784078439}
   m_Layer: 0
   m_Name: Cat
-  m_TagString: Untagged
+  m_TagString: Cat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,7 +134,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8724dae6816d28499863f6987923e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreManager: {fileID: 0}
   moveSpeed: 3
+  speedVariance: 3
   changeDirectionInterval: 3
 --- !u!58 &9126182881439120281
 CircleCollider2D:
