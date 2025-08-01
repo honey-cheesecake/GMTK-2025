@@ -497,7 +497,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.1
+    widthMultiplier: 0.01
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -566,8 +566,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f76493aa46526b048a80f72d7857083d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  length: 20
-  numNodes: 100
+  length: 5
+  numNodes: 10
+  constraintSteps: 1
   lineRenderer: {fileID: 2071161158}
   cam: {fileID: 519420031}
   catManager: {fileID: 0}

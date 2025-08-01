@@ -9,7 +9,8 @@ using UnityEngine.UIElements;
 public class RopeManager : MonoBehaviour
 {
     [SerializeField] float length;
-    [SerializeField] [UnityEngine.Range(2,100)] int numNodes;
+    [SerializeField][UnityEngine.Range(2, 100)] int numNodes;
+    [SerializeField][UnityEngine.Range(1, 10)] int constraintSteps;
     [SerializeField] LineRenderer lineRenderer;
     [SerializeField] Camera cam;
     [SerializeField] CatManager catManager;
@@ -46,37 +47,45 @@ public class RopeManager : MonoBehaviour
         mousePos = cam.ScreenToWorldPoint(mousePos);
         mousePos.z = 0;
 
-        if (Vector3.Distance(transform.position, mousePos) > length)
-        {
-            // Too far; straighten as much as possible and give up
-            for (int i = 0; i < numNodes; i++)
-            {
-                positions[i] = (mousePos - transform.position) / numNodes * i;
-            }
-            return;
-        }
-
         // Move the tip of the rope
         positions[numNodes - 1] = mousePos;
-        DoConstraint(numNodes - 2);
-    }
 
-    void DoConstraint(int idx)
-    {
-        if (idx == 0)
+        for (int i = 0; i < constraintSteps; i++)
         {
-            return; // anchor shouldn't move. If we reach here we did something wrong tbh
+            for (int edgeIdx = 0; edgeIdx < numNodes - 1; edgeIdx++)
+            {
+                int nextIdx = edgeIdx + 1;
+                int currIdx = edgeIdx;
+
+                Vector3 nextPos = positions[nextIdx];
+                Vector3 currPos = positions[currIdx];
+
+                float targetLength = length / numNodes;
+                float actualLength = Vector2.Distance(nextPos, currPos);
+                float lengthDelta = targetLength - actualLength;
+                Vector3 stickDir = (nextPos - currPos).normalized;
+
+                //if (currIdx != 0)
+                {
+                    positions[currIdx] -= stickDir * lengthDelta / 2;
+                }
+                if (nextIdx != numNodes - 1)
+                {
+                    positions[nextIdx] += stickDir * lengthDelta / 2;
+                }
+            }
         }
 
-        float edgeLength = length / numNodes;
+    }
 
-        Vector2 nextPos = positions[idx + 1];
-        Vector2 currPos = positions[idx];
-
-        if (Vector3.Distance(currPos, nextPos) > edgeLength)
+    private void OnDrawGizmos()
+    {
+        if (positions != null)
         {
-            positions[idx] = nextPos + (currPos - nextPos).normalized * edgeLength;
-            DoConstraint(idx - 1);
+            foreach (var pos in positions)
+            {
+                Gizmos.DrawSphere(pos, 0.1f);
+            }
         }
     }
 }
