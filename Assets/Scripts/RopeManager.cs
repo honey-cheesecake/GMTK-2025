@@ -8,41 +8,11 @@ using UnityEngine.UIElements;
 
 public class RopeManager : MonoBehaviour
 {
-    //private class Node
-    //{
-    //    Vector3 position;
-    //    Node prev; // towards the anchor
-    //    Node next; // towards the mouse
-
-    //    bool IsAnchor()
-    //    {
-    //        return prev == null;
-    //    }
-
-    //    void MoveTo(Vector3 newPos, float edgeLength)
-    //    {
-    //        position = newPos;
-    //        DoConstraint(edgeLength);
-    //    }
-
-    //    void DoConstraint(float edgeLength)
-    //    {
-    //        if (IsAnchor())
-    //        {
-    //            return; // anchor shouldn't move. If we reach here we did something wrong tbh
-    //        }
-    //        if (Vector3.Distance(position, next.position) > edgeLength)
-    //        {
-    //            position = next.position + (position - next.position).normalized * edgeLength;
-    //            prev?.DoConstraint(edgeLength);
-    //        }     
-    //    }
-    //}
-
     [SerializeField] float length;
     [SerializeField] [UnityEngine.Range(2,100)] int numNodes;
     [SerializeField] LineRenderer lineRenderer;
     [SerializeField] Camera cam;
+    [SerializeField] CatManager catManager;
 
     Vector3[] positions;
     InputAction mousePosAction;
@@ -61,6 +31,13 @@ public class RopeManager : MonoBehaviour
     {
         UpdateRope();
         lineRenderer.SetPositions(positions);
+
+        // catManager.getAllCats()
+        // foreach
+        // {
+        // if encircled
+        // cat.OnEncircled()
+        // }
     }
 
     void UpdateRope()
