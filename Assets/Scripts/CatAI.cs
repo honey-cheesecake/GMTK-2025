@@ -2,14 +2,20 @@ using UnityEngine;
 
 public class CatAI : MonoBehaviour
 {
+    //Should probably be talking to ScoreManager to tell when a cat is removed
+    [SerializeField] ScoreManager scoreManager;
 
+    //Cat speed variables
     public float moveSpeed = 5.0f;
+    public float speedVariance = 2f;
     public float changeDirectionInterval = 2.0f;
 
+    //Cat position variables
     private Vector3 targetPosition;
     private float timeSinceLastDirectionChange;
-    private float waitInterval;
+    //private float waitTimer = 0f;
 
+    //if cat has hit wall
     private bool hitWall = false;
 
     //private float timeSinceLastDirectionChange;
@@ -30,7 +36,8 @@ public class CatAI : MonoBehaviour
     public void OnEncircled()
     {
 
-    }
+        Destroy(this.gameObject);
+    }   
 
     private void MoveRandomly()
     {
@@ -45,10 +52,12 @@ public class CatAI : MonoBehaviour
 
         // Check if it's time to change direction
         timeSinceLastDirectionChange += Time.deltaTime;
-        if (timeSinceLastDirectionChange >= changeDirectionInterval + waitInterval)
+
+        if (timeSinceLastDirectionChange > changeDirectionInterval)
         {
             UpdateTargetPosition();
         }
+        
     }
 
     private void UpdateTargetPosition()
@@ -60,6 +69,10 @@ public class CatAI : MonoBehaviour
 
         // Calculate the angle in degrees
         float angle2 = Mathf.Atan2(targetPosition.y, targetPosition.x) * Mathf.Rad2Deg;
+
+        //speed variance
+        float randomSpeed = Random.Range(-(speedVariance), speedVariance);
+        moveSpeed += randomSpeed;
 
 
         // Reset the timer for the next direction change
@@ -75,7 +88,7 @@ public class CatAI : MonoBehaviour
         if (collision.gameObject.CompareTag("Wall") || collision.gameObject.layer == LayerMask.NameToLayer("Walls"))
         {
             hitWall = true;
-            Debug.Log("Hit wall - stopping movement");
+            //Debug.Log("Hit wall - stopping movement");
         }
     }
 
