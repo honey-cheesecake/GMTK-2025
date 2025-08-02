@@ -18,10 +18,7 @@ public class CatAI : MonoBehaviour
     [Header("Collision avoidance")]
     [SerializeField] float circleCastRadius;
     [SerializeField] LayerMask layerMask;
-    //private float waitTimer = 0f;
 
-    //if cat has hit wall
-    //private bool hitWall = false;
     private CatManager catManager;
     private float moveSpeed;
 
@@ -36,14 +33,13 @@ public class CatAI : MonoBehaviour
     void Start()
     {
         UpdateTargetPosition();
-        //MoveRandomly();
-        //Debug.Log(transform.position);
     }
 
     // Update is called once per frame
     void Update()
     {
-        MoveRandomly();
+        UpdateTargetPositionIfNeeded();
+        MoveTowardTarget();
     }
 
     public void OnEncircled()
@@ -52,15 +48,8 @@ public class CatAI : MonoBehaviour
         Destroy(this.gameObject);
     }   
 
-    private void MoveRandomly()
+    private void UpdateTargetPositionIfNeeded()
     {
-
-        //if (hitWall)
-        //{
-        //    PickTargetAwayFromWall();
-        //    //return;
-        //}
-
         // Check if it's time to change direction
         timeSinceLastDirectionChange += Time.deltaTime;
         if (timeSinceLastDirectionChange > changeDirectionInterval)
@@ -69,16 +58,18 @@ public class CatAI : MonoBehaviour
         }
         else
         {
-            // Check if it's about to hit a wall or cat
+            // Check if it's about to hit a cat
             RaycastHit2D hit = Physics2D.CircleCast(transform.position, circleCastRadius, targetPosition - transform.position, moveSpeed * Time.deltaTime, layerMask);
             if (hit.collider)
             {
                 UpdateTargetPosition();
             }
         }
-        
+    }
+
+    private void MoveTowardTarget()
+    {
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-    
     }
 
     private void UpdateTargetPosition()
@@ -100,63 +91,12 @@ public class CatAI : MonoBehaviour
 
         //hitWall = false;
     }
-
-
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-
-    //    if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Cat"))
-    //    {
-    //        hitWall = true;
-    //        //Debug.Log("Hit wall - stopping movement");
-    //    }
-    //}
-
-    //private void OnCollisionExit2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Cat"))
-    //    {
-    //        // Object moved away from wall, can resume movement
-    //        hitWall = false;
-    //    }
-    //}
-
-    
-    //private void PickTargetAwayFromWall()
-    //{
-    //    Vector3 currentPos = transform.position;
-    //    Vector3 newTarget;
-    //    int attempts = 0;
-    //    int maxAttempts = 10;
-
-    //    do
-    //    {
-    //        // Generate random target
-    //        float randomX = Random.Range(-20f, 20f);
-    //        float randomY = Random.Range(-10f, 10f);
-    //        newTarget = new Vector3(randomX, randomY, 0f);
-    //        attempts++;
-    //    }
-    //    while (Vector3.Distance(currentPos, newTarget) < 3f && attempts < maxAttempts); // Ensure target is reasonably far away
-
-    //    targetPosition = newTarget;
-
-    //    // Calculate the angle in degrees
-    //    float angle2 = Mathf.Atan2(targetPosition.y, targetPosition.x) * Mathf.Rad2Deg;
-
-    //    // Reset the timer for the next direction change
-    //    timeSinceLastDirectionChange = 0.0f;
-
-    //    Debug.Log("Moving away from wall to new target");
-    //}
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blueViolet;
         Gizmos.DrawWireSphere(transform.position, circleCastRadius);
 
         Gizmos.DrawLine(transform.position, targetPosition);
-
     }
 
 }
