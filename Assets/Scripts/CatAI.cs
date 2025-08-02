@@ -6,14 +6,14 @@ public class CatAI : MonoBehaviour
     [SerializeField] ScoreManager scoreManager;
 
     // waawaawaw
-    //Cat speed variables
-    public float moveSpeed = 5.0f;
-    public float speedVariance = 2f;
-    public float changeDirectionInterval = 2.0f;
+    [Header("Cat speed variables")]
+    [SerializeField] float moveSpeed = 5.0f;
+    [SerializeField] float speedVariance = 2f;
+    [SerializeField] float changeDirectionInterval = 2.0f;
 
-    //Cat position variables
-    private Vector3 targetPosition;
-    private float timeSinceLastDirectionChange;
+    [Header("Cat position variables")]
+    [SerializeField] Vector3 targetPosition;
+    [SerializeField] float timeSinceLastDirectionChange;
     //private float waitTimer = 0f;
 
     //if cat has hit wall

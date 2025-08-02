@@ -9,14 +9,19 @@ using static UnityEditor.PlayerSettings;
 
 public class RopeManager : MonoBehaviour
 {
+    [Header("Gameplay")]
     [SerializeField] float length;
     [SerializeField][Range(2, 100)] int numNodes;
     //[SerializeField][Range(0f, 1f)] float friction;
+
+    [Header("Visuals")]
     [SerializeField][Range(0f, 1f)] float liftStart;
     [SerializeField][Range(0f, 1f)] float liftMin;
     [SerializeField][Range(0f, 1f)] float liftMax;
     [SerializeField] LineRenderer ropeRenderer;
     [SerializeField] LineRenderer shadowRenderer;
+
+    [Header("References")]
     [SerializeField] Camera cam;
     [SerializeField] CatManager catManager;
 
