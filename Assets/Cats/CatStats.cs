@@ -7,6 +7,7 @@ public class CatStats : ScriptableObject
     public enum RarityType { Common, Rare, EasterEgg }
     [SerializeField] string displayName;
     [SerializeField] RarityType rarity;
+    [SerializeField] [Range(0.1f, 3f)] float size = 1;
     [SerializeField] [TextArea(3, 5)] string description;
     [SerializeField] SpriteLibraryAsset sprites;
     [SerializeField] [Range(0f, 20f)] float minMoveSpeed;
@@ -18,6 +19,7 @@ public class CatStats : ScriptableObject
     public float MaxMoveSpeed { get {  return maxMoveSpeed; } }
     public float RunSpeed { get {  return runSpeed; } }
     public RarityType Rarity { get {  return rarity; } }
+    public float Size { get {  return size; } }
 
     public int GetSpawnWeight()
     {

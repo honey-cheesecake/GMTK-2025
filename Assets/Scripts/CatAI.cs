@@ -33,6 +33,7 @@ public class CatAI : MonoBehaviour
     {
         this.stats = stats;
         spriteLibrary.spriteLibraryAsset = stats.SpriteLibraryAsset;
+        transform.localScale = Vector3.one * stats.Size;
 
         this.catManager = catManager;
         this.scoreManager = scoreManager;
