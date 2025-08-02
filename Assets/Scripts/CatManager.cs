@@ -13,6 +13,7 @@ public class CatManager : MonoBehaviour
 
         foreach (CatAI cat in cats)
         {
+            cat.Setup(this);
             Debug.Log("Cat Name and cat Pos: " + cat.name + " " + cat.transform.position);
         }
 
@@ -45,27 +46,13 @@ public class CatManager : MonoBehaviour
     
     }
 
-    public Vector3 GetPointInCamera()
+    public Vector3 GetRandomPointInCamera()
     {
         float height = 2f * cam.orthographicSize;
         float width = height * cam.aspect;
         Vector3 bottom_left = cam.transform.position - new Vector3(width, height, 0) / 2;
+        bottom_left.z = 0;
 
         return bottom_left + new Vector3(Random.Range(0, width), Random.Range(0, height), 0);
     }
-
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.yellow;
-    //    float height = 2f * cam.orthographicSize;
-    //    float width = height * cam.aspect;
-
-
-    //    Vector3 bl = cam.transform.position - new Vector3(width, height, 0) / 2;
-    //    Vector3 tr = cam.transform.position + new Vector3(width, height, 0) / 2;
-
-    //    //Gizmos.DrawWireCube(cam.transform.position, new Vector3(width, height, 0));
-    //    Gizmos.DrawLine(bl, tr);
-    //    //Gizmos.DrawLine(cam.transform.position);
-    //}
 }

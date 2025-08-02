@@ -24,7 +24,7 @@ public class CatAI : MonoBehaviour
 
     //private float timeSinceLastDirectionChange;
 
-    void Setup(CatManager catManager)
+    public void Setup(CatManager catManager)
     {
         this.catManager = catManager;
     }
@@ -75,21 +75,13 @@ public class CatAI : MonoBehaviour
     private void UpdateTargetPosition()
     {
         // Generate a new random target position within the bounds of your game world
-        float randomX = Random.Range(-20f, 20f); // 
-        float randomY = Random.Range(-10f, 10f); // 
-        targetPosition = new Vector3(randomX, randomY, 0f);
-
-        // Calculate the angle in degrees
-        float angle2 = Mathf.Atan2(targetPosition.y, targetPosition.x) * Mathf.Rad2Deg;
+        targetPosition = catManager.GetRandomPointInCamera();
 
         //speed variance
         moveSpeed = Random.Range(minMoveSpeed, maxMoveSpeed);
 
-
         // Reset the timer for the next direction change
         timeSinceLastDirectionChange = 0.0f;
-
-        //hitWall = false;
     }
     private void OnDrawGizmos()
     {
