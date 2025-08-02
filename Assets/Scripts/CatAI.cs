@@ -5,6 +5,7 @@ public class CatAI : MonoBehaviour
     //Should probably be talking to ScoreManager to tell when a cat is removed
     [SerializeField] ScoreManager scoreManager;
 
+    // waawaawaw
     //Cat speed variables
     public float moveSpeed = 5.0f;
     public float speedVariance = 2f;
