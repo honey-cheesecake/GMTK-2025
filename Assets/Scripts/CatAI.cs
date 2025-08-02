@@ -23,6 +23,7 @@ public class CatAI : MonoBehaviour
 
     //private float timeSinceLastDirectionChange;
 
+    // called by the CatManager when this cat is instantiated
     public void Setup(CatManager catManager, ScoreManager scoreManager)
     {
         this.catManager = catManager;
@@ -45,6 +46,7 @@ public class CatAI : MonoBehaviour
     public void OnEncircled()
     {
         scoreManager.score = scoreManager.score + 10;
+        catManager.SetCatUncatchable(this);
         Destroy(this.gameObject);
     }   
 
@@ -58,19 +60,22 @@ public class CatAI : MonoBehaviour
             return;
         }
 
+        // flee from mouse if it's too close
         if (Vector3.Distance(transform.position, catManager.MousePosition()) <= circleCastRadius)
         {
             FleeFromMouse();
             return;
         }
 
-        // Check if it's about to hit a cat
+        // Check if it's about to hit another cat
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, circleCastRadius, targetPosition - transform.position, moveSpeed * Time.deltaTime, layerMask);
         if (hit.collider)
         {
             UpdateTargetPosition();
             return;
         }
+
+        // we don't need to check for walls because we pick the targetPosition to be within the screen bounds
     }
 
     private void MoveTowardTarget()

@@ -8,8 +8,8 @@ public class ScoreManager : MonoBehaviour
 {
     public float timeRemaining;
     public int score = 0;
-    public float maxScore = 120;
 
+    [SerializeField] CatManager catManager;
     [SerializeField] GameObject gameOverScreen;
     [SerializeField] TextMeshProUGUI timeRemainingText;
     [SerializeField] TextMeshProUGUI scoreText;
@@ -26,7 +26,7 @@ public class ScoreManager : MonoBehaviour
     private void Update()
     {
         timeRemaining -= Time.deltaTime;
-        if (timeRemaining <= 0 || score == 120)
+        if (timeRemaining <= 0 || catManager.getCatchableCats().Count == 0)
         {
             GetScore();
             gameOverScreen.SetActive(true);

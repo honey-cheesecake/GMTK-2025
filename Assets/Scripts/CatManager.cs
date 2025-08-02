@@ -11,26 +11,23 @@ public class CatManager : MonoBehaviour
     [SerializeField] GameObject catPrefab;
 
     InputAction mousePosAction;
-    List<CatAI> catList;
+    List<CatAI> catchableCats; // cats do a lil animation before despawning, and we shouldn't allow the player to double dip
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         mousePosAction = InputSystem.actions.FindAction("MousePos");
 
-        catList = new List<CatAI>();
+        catchableCats = new List<CatAI>();
         for (int i = 0; i < numCats; i++)
         {
             GameObject catInstance = Instantiate(catPrefab, GetRandomPointInCamera(), Quaternion.identity);
             CatAI catAI = catInstance.GetComponent<CatAI>();
             Debug.Assert(catAI != null, "couldn't find CatAI");
-            catList.Add(catAI);
+            catchableCats.Add(catAI);
             catAI.Setup(this, scoreManager);
         }
-
-        //List<CatAI> cats = getAllCats();
-        //Debug.Log("total number of cats: " + cats.Count);
-
+        Debug.Log("total number of cats: " + catchableCats.Count);
     }
 
     // Update is called once per frame  cat.name cat.name
@@ -39,25 +36,15 @@ public class CatManager : MonoBehaviour
         
     }
 
-    public List<CatAI> getAllCats()
+    // TODO turn this into a delegate that we pass into catAI.Setup as a callback
+    public void SetCatUncatchable(CatAI cat)
     {
-        //finds everything with "Cat" tag and makes a list for these "Cat" tagged objects
-        GameObject[] cats = GameObject.FindGameObjectsWithTag("Cat");
-        List<CatAI> catList = new List<CatAI>();
+        catchableCats.Remove(cat);
+    }
 
-        //Makes list of "Cat" tagged objects 
-        foreach (GameObject cat in cats)
-        {
-            CatAI catAI = cat.GetComponent<CatAI>();
-            if (catAI != null)
-            {
-                catList.Add(catAI);
-            }
-        }
-
-        //returs list of "Cat" tagged objects
-        return catList;
-    
+    public List<CatAI> getCatchableCats()
+    {
+        return catchableCats;
     }
 
     public Vector3 GetRandomPointInCamera()

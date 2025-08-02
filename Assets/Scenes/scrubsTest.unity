@@ -756,7 +756,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeRemaining: 60
   score: 0
-  maxScore: 120
+  catManager: {fileID: 2014783400}
   gameOverScreen: {fileID: 1532121904}
   timeRemainingText: {fileID: 2099894716}
   scoreText: {fileID: 826642870}
@@ -1396,7 +1396,7 @@ MonoBehaviour:
   ropeManager: {fileID: 2071161159}
   scoreManager: {fileID: 739461744}
   cam: {fileID: 519420031}
-  numCats: 26
+  numCats: 14
   catPrefab: {fileID: 7822338023374751114, guid: c7055394c0064a54f8463d46bb21cfa6, type: 3}
 --- !u!4 &2014783401
 Transform:

@@ -163,7 +163,7 @@ public class RopeManager : MonoBehaviour
             return;
         }
 
-        List<CatAI> cats = catManager.getAllCats();
+        List<CatAI> cats = catManager.getCatchableCats();
         //List<Vector3> cats = new();
         //for (int x = -10; x < 10; x++)
         //{
@@ -173,6 +173,9 @@ public class RopeManager : MonoBehaviour
         //    }
         //}
 
+        // calling cat.OnEncircled modifies the catchablecats list while we're iterating, which is undefined behaviour.
+        // we collect the list of cats to notify, and call them after the loop
+        List<CatAI> catsToNotify = new();
         foreach (var cat in cats)
         {
             Vector3 catPos = XYtoXZ(cat.transform.position);
@@ -185,14 +188,17 @@ public class RopeManager : MonoBehaviour
             }
             if (GeometryUtils.PointInPolygon(catPos, loopPositions))
             {
-                cat.OnEncircled();
-                //Debug.Log("encircled!");
+                catsToNotify.Add(cat);
                 //Debug.DrawLine(cat, cat + new Vector3(0.5f, 0.5f, 0), Color.red);
             }
             else
             {
                 //Debug.DrawLine(cat, cat + new Vector3(0.5f, 0.5f, 0), Color.yellow);
             }
+        }
+        foreach (var cat in catsToNotify)
+        {
+            cat.OnEncircled();
         }
     }
 
