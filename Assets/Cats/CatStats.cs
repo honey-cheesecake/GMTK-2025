@@ -4,7 +4,9 @@ using UnityEngine.U2D.Animation;
 [CreateAssetMenu(fileName = "CatStats", menuName = "Scriptable Objects/CatStats")]
 public class CatStats : ScriptableObject
 {
+    public enum RarityType { Common, Rare, EasterEgg }
     [SerializeField] string displayName;
+    [SerializeField] RarityType rarity;
     [SerializeField] [TextArea(3, 5)] string description;
     [SerializeField] SpriteLibraryAsset sprites;
     [SerializeField] [Range(0f, 20f)] float minMoveSpeed;
@@ -15,5 +17,6 @@ public class CatStats : ScriptableObject
     public float MinMoveSpeed { get {  return minMoveSpeed; } }
     public float MaxMoveSpeed { get {  return maxMoveSpeed; } }
     public float RunSpeed { get {  return runSpeed; } }
+    public RarityType Rarity { get {  return rarity; } }
 
 }

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0b00b5b8b531aa844be06315d2bab715
+guid: 3e927d87b2ccaae4d90cb65ebac57f40
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 55158383388475093
-    second: Basic Run 1_0
+      213: -1712882811781053712
+    second: Basic Walk 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Basic Run 1_0
+      name: Basic Walk 1_0
       rect:
         serializedVersion: 2
-        x: 27
-        y: 53
-        width: 206
-        height: 184
+        x: 67
+        y: 63
+        width: 152
+        height: 180
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5de3148e146f3c000800000000000000
-      internalID: 55158383388475093
+      spriteID: 0f20bed682e9a38e0800000000000000
+      internalID: -1712882811781053712
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Basic Run 1_0: 55158383388475093
+      Basic Walk 1_0: -1712882811781053712
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

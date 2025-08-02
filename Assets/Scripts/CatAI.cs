@@ -89,7 +89,6 @@ public class CatAI : MonoBehaviour
 
     private void MoveTowardTarget()
     {
-        spriteRenderer.flipX = (targetPosition - transform.position).x < 0;
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
     }
 
@@ -111,6 +110,10 @@ public class CatAI : MonoBehaviour
 
         // Reset the timer for the next direction change
         timeSinceLastDirectionChange = 0.0f;
+
+        // visuals
+        anim.speed = moveSpeed;
+        spriteRenderer.flipX = (targetPosition - transform.position).x < 0;
     }
 
     private void FleeFromMouse()
@@ -135,6 +138,10 @@ public class CatAI : MonoBehaviour
 
         // Reset the timer for the next direction change
         timeSinceLastDirectionChange = 0.0f;
+
+        // visuals
+        anim.speed = moveSpeed;
+        spriteRenderer.flipX = (targetPosition - transform.position).x < 0;
     }
 
     private void OnDrawGizmos()
