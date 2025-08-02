@@ -135,9 +135,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreManager: {fileID: 0}
-  moveSpeed: 3
-  speedVariance: 3
-  changeDirectionInterval: 3
+  moveSpeed: 10
+  speedVariance: 10
+  changeDirectionInterval: 1
 --- !u!58 &9126182881439120281
 CircleCollider2D:
   m_ObjectHideFlags: 0

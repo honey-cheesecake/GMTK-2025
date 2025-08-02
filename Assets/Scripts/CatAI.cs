@@ -25,7 +25,8 @@ public class CatAI : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        MoveRandomly();
+        Debug.Log(transform.position);
     }
 
     // Update is called once per frame
@@ -36,7 +37,7 @@ public class CatAI : MonoBehaviour
 
     public void OnEncircled()
     {
-
+        scoreManager.score = scoreManager.score + 10;
         Destroy(this.gameObject);
     }   
 
@@ -64,7 +65,7 @@ public class CatAI : MonoBehaviour
     private void UpdateTargetPosition()
     {
         // Generate a new random target position within the bounds of your game world
-        float randomX = Random.Range(-10f, 10f); // 
+        float randomX = Random.Range(-20f, 20f); // 
         float randomY = Random.Range(-10f, 10f); // 
         targetPosition = new Vector3(randomX, randomY, 0f);
 
@@ -86,7 +87,7 @@ public class CatAI : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.layer == LayerMask.NameToLayer("Walls"))
+        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Cat"))
         {
             hitWall = true;
             //Debug.Log("Hit wall - stopping movement");
@@ -95,7 +96,7 @@ public class CatAI : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Wall"))
+        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Cat"))
         {
             // Object moved away from wall, can resume movement
             hitWall = false;
@@ -113,7 +114,7 @@ public class CatAI : MonoBehaviour
         do
         {
             // Generate random target
-            float randomX = Random.Range(-10f, 10f);
+            float randomX = Random.Range(-20f, 20f);
             float randomY = Random.Range(-10f, 10f);
             newTarget = new Vector3(randomX, randomY, 0f);
             attempts++;
