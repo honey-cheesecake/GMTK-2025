@@ -102,13 +102,16 @@ public class CatAI : MonoBehaviour
         // Generate a new random target position within the bounds of your game world
         int attempts = 0;
         int maxAttempts = 10;
-        Vector3 dirToMouse = catManager.MousePosition() - transform.position;
+        Vector3 mousePos = catManager.MousePosition();
+        Vector3 dirToMouse = mousePos - transform.position;
 
         do
         {
             targetPosition = catManager.GetRandomPointInCamera();
             attempts++;
-        } while (Vector3.Dot(dirToMouse, targetPosition - transform.position) > 0 && attempts < maxAttempts);
+        } while (Vector3.Dot(dirToMouse, targetPosition - transform.position) > 0
+            && Vector3.Distance(mousePos, targetPosition) < 3f
+            && attempts < maxAttempts);
 
         //speed variance
         moveSpeed = maxMoveSpeed;
