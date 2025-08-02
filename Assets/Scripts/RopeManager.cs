@@ -12,7 +12,11 @@ public class RopeManager : MonoBehaviour
     [SerializeField] float length;
     [SerializeField][Range(2, 100)] int numNodes;
     //[SerializeField][Range(0f, 1f)] float friction;
-    [SerializeField] LineRenderer lineRenderer;
+    [SerializeField][Range(0f, 1f)] float liftStart;
+    [SerializeField][Range(0f, 1f)] float liftMin;
+    [SerializeField][Range(0f, 1f)] float liftMax;
+    [SerializeField] LineRenderer ropeRenderer;
+    [SerializeField] LineRenderer shadowRenderer;
     [SerializeField] Camera cam;
     [SerializeField] CatManager catManager;
 
@@ -25,7 +29,8 @@ public class RopeManager : MonoBehaviour
     {
         positions = new Vector3[numNodes];
         prevPositions = new Vector3[numNodes];
-        lineRenderer.positionCount = numNodes;
+        ropeRenderer.positionCount = numNodes;
+        shadowRenderer.positionCount = numNodes;
 
         mousePosAction = InputSystem.actions.FindAction("MousePos");
     }
@@ -34,8 +39,8 @@ public class RopeManager : MonoBehaviour
     void Update()
     {
         UpdateRope();
-        lineRenderer.SetPositions(positions);
         HandleCats();
+        UpdateVisuals();
     }
 
     void UpdateRope()
@@ -76,6 +81,32 @@ public class RopeManager : MonoBehaviour
             prevPositions[i] = positions[i];
         }
     }
+
+    void UpdateVisuals()
+    {
+        shadowRenderer.SetPositions(positions);
+
+        Vector3[] visualPositions = new Vector3[numNodes];
+        for (int i = 0; i < numNodes; i++)
+        {
+            visualPositions[i] = positions[i];
+            if (i >= (int)(numNodes * liftStart))
+            {
+                visualPositions[i] += Vector3.up * Remap(i, numNodes * liftStart, numNodes, liftMin, liftMax);
+            }
+            else
+            {
+                visualPositions[i] += Vector3.up * liftMin;
+            }
+        }
+        ropeRenderer.SetPositions(visualPositions);
+    }
+
+    public static float Remap(float value, float from1, float to1, float from2, float to2)
+    {
+        return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+    }
+
     void AABB(ref Vector3 min, ref Vector3 max)
     {
         min = positions[0];
