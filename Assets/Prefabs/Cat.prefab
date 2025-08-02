@@ -255,8 +255,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8724dae6816d28499863f6987923e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minMoveSpeed: 5
-  maxMoveSpeed: 40
   changeDirectionInterval: 1
   targetPosition: {x: 0, y: 0, z: 0}
   timeSinceLastDirectionChange: 0
@@ -266,6 +264,7 @@ MonoBehaviour:
     m_Bits: 64
   anim: {fileID: 4444502798881678312}
   spriteLibrary: {fileID: 7816770417816360088}
+  spriteRenderer: {fileID: 89277159560403799}
 --- !u!58 &9126182881439120281
 CircleCollider2D:
   m_ObjectHideFlags: 0

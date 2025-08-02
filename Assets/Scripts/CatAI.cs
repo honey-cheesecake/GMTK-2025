@@ -19,6 +19,7 @@ public class CatAI : MonoBehaviour
     [Header("Component References")]
     [SerializeField] Animator anim;
     [SerializeField] SpriteLibrary spriteLibrary;
+    [SerializeField] SpriteRenderer spriteRenderer;
 
     private CatManager catManager;
     ScoreManager scoreManager;
@@ -88,6 +89,7 @@ public class CatAI : MonoBehaviour
 
     private void MoveTowardTarget()
     {
+        spriteRenderer.flipX = (targetPosition - transform.position).x < 0;
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
     }
 
