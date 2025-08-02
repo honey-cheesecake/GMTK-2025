@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CatAI : MonoBehaviour
 {
@@ -55,15 +56,21 @@ public class CatAI : MonoBehaviour
         if (timeSinceLastDirectionChange > changeDirectionInterval)
         {
             UpdateTargetPosition();
+            return;
         }
-        else
+
+        if (Vector3.Distance(transform.position, catManager.MousePosition()) <= circleCastRadius)
         {
-            // Check if it's about to hit a cat
-            RaycastHit2D hit = Physics2D.CircleCast(transform.position, circleCastRadius, targetPosition - transform.position, moveSpeed * Time.deltaTime, layerMask);
-            if (hit.collider)
-            {
-                UpdateTargetPosition();
-            }
+            FleeFromMouse();
+            return;
+        }
+
+        // Check if it's about to hit a cat
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, circleCastRadius, targetPosition - transform.position, moveSpeed * Time.deltaTime, layerMask);
+        if (hit.collider)
+        {
+            UpdateTargetPosition();
+            return;
         }
     }
 
@@ -90,6 +97,27 @@ public class CatAI : MonoBehaviour
         // Reset the timer for the next direction change
         timeSinceLastDirectionChange = 0.0f;
     }
+
+    private void FleeFromMouse()
+    {
+        // Generate a new random target position within the bounds of your game world
+        int attempts = 0;
+        int maxAttempts = 10;
+        Vector3 dirToMouse = catManager.MousePosition() - transform.position;
+
+        do
+        {
+            targetPosition = catManager.GetRandomPointInCamera();
+            attempts++;
+        } while (Vector3.Dot(dirToMouse, targetPosition - transform.position) > 0 && attempts < maxAttempts);
+
+        //speed variance
+        moveSpeed = maxMoveSpeed;
+
+        // Reset the timer for the next direction change
+        timeSinceLastDirectionChange = 0.0f;
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blueViolet;

@@ -1,13 +1,19 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class CatManager : MonoBehaviour
 {
     [SerializeField] RopeManager ropeManager;
     [SerializeField] Camera cam;
+
+    InputAction mousePosAction;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        mousePosAction = InputSystem.actions.FindAction("MousePos");
+
         List<CatAI> cats = getAllCats();
         Debug.Log("total number of cats: " + cats.Count);
 
@@ -56,9 +62,13 @@ public class CatManager : MonoBehaviour
         return bottom_left + new Vector3(Random.Range(0, width), Random.Range(0, height), 0);
     }
 
-    public bool OverlapWithRope(Vector3 center, float radius)
+    public Vector3 MousePosition()
     {
-        return ropeManager.OverlapCircle(center, radius);
+        Vector3 mousePos = mousePosAction.ReadValue<Vector2>();
+        mousePos = cam.ScreenToWorldPoint(mousePos);
+        mousePos.z = 0;
+
+        return mousePos;
     }
 
     public bool CircleCastRope(Vector3 origin, Vector3 target, float radius)
