@@ -369,6 +369,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3906e420cedddfc499c1abae02bfe5fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeRemaining: 0
+  score: 0
+  maxScore: 120
+  gameOverScreen: {fileID: 0}
+  timeRemainingText: {fileID: 0}
+  scoreText: {fileID: 0}
+  finalScoreText: {fileID: 0}
 --- !u!4 &739461745
 Transform:
   m_ObjectHideFlags: 0
@@ -568,7 +575,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   length: 20
   numNodes: 40
-  lineRenderer: {fileID: 2071161158}
+  liftStart: 0
+  liftMin: 0
+  liftMax: 0
+  ropeRenderer: {fileID: 2071161158}
+  shadowRenderer: {fileID: 2071161158}
   cam: {fileID: 519420031}
   catManager: {fileID: 2014783400}
 --- !u!4 &2071161160
