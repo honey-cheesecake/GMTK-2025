@@ -75,7 +75,14 @@ public class CatAI : MonoBehaviour
     private void UpdateTargetPosition()
     {
         // Generate a new random target position within the bounds of your game world
-        targetPosition = catManager.GetRandomPointInCamera();
+        int attempts = 0;
+        int maxAttempts = 10;
+
+        do
+        {
+            targetPosition = catManager.GetRandomPointInCamera();
+            attempts++;
+        } while (catManager.CircleCastRope(transform.position, targetPosition, circleCastRadius) && attempts < maxAttempts);
 
         //speed variance
         moveSpeed = Random.Range(minMoveSpeed, maxMoveSpeed);

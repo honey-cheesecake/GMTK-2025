@@ -55,4 +55,31 @@ public class CatManager : MonoBehaviour
 
         return bottom_left + new Vector3(Random.Range(0, width), Random.Range(0, height), 0);
     }
+
+    public bool OverlapWithRope(Vector3 center, float radius)
+    {
+        return ropeManager.OverlapCircle(center, radius);
+    }
+
+    public bool CircleCastRope(Vector3 origin, Vector3 target, float radius)
+    {
+        Vector3 step = (target - origin).normalized * radius;
+
+        int numIter = (int)(Vector3.Distance(target, origin) / radius);
+        for (int i = 0; i < numIter; i++)
+        {
+            Vector3 samplePos = origin + step * i;
+            if (ropeManager.OverlapCircle(samplePos, radius))
+            {
+                return true;
+            }
+        }
+
+        if (ropeManager.OverlapCircle(target, radius))
+        {
+            return true;
+        }
+
+        return false;
+    }
 }

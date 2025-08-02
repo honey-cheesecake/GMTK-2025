@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using Unity.XR.CoreUtils;
 using static UnityEditor.PlayerSettings;
+using System.Drawing;
 
 public class RopeManager : MonoBehaviour
 {
@@ -29,6 +30,12 @@ public class RopeManager : MonoBehaviour
     Vector3[] prevPositions;
     InputAction mousePosAction;
 
+    // Physics cache
+    Vector3 aabbMin;
+    Vector3 aabbMax;
+    List<Vector3> loopPositions; // subset of positions with XZ swizzle. empty if no loop present.
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -37,6 +44,8 @@ public class RopeManager : MonoBehaviour
         ropeRenderer.positionCount = numNodes;
         shadowRenderer.positionCount = numNodes;
 
+        loopPositions = new();
+
         mousePosAction = InputSystem.actions.FindAction("MousePos");
     }
 
@@ -44,6 +53,7 @@ public class RopeManager : MonoBehaviour
     void Update()
     {
         UpdateRope();
+        PrepareCollision();
         HandleCats();
         UpdateVisuals();
     }
@@ -123,10 +133,10 @@ public class RopeManager : MonoBehaviour
         }
     }
 
-    void HandleCats()
+    void PrepareCollision()
     {
         // construct a new sublit with proper swizzle -----------------------------------------
-        List<Vector3> swizzledPos = new(); // PointInPolygon expects XZ swizzle
+        loopPositions.Clear();
         int small = 0;
         int big = 0;
         if (!FindClosedLoop(out small, out big))
@@ -137,15 +147,21 @@ public class RopeManager : MonoBehaviour
 
         for (int i = small; i <= big; i++)
         {
-            swizzledPos.Add(XYtoXZ(positions[i]));
+            loopPositions.Add(XYtoXZ(positions[i]));
         }
 
         // find bounding box -----------------------------------------
-        Vector3 min = Vector3.zero;
-        Vector3 max = Vector3.zero;
-        AABB(ref min, ref max);
-        min = XYtoXZ(min);
-        max = XYtoXZ(max);
+        AABB(ref aabbMin, ref aabbMax);
+        aabbMin = XYtoXZ(aabbMin);
+        aabbMax = XYtoXZ(aabbMax);
+    }
+    void HandleCats()
+    {
+        if (loopPositions.Count() == 0)
+        {
+            // no loop; nothing to do
+            return;
+        }
 
         List<CatAI> cats = catManager.getAllCats();
         //List<Vector3> cats = new();
@@ -161,13 +177,13 @@ public class RopeManager : MonoBehaviour
         {
             Vector3 catPos = XYtoXZ(cat.transform.position);
             //Vector3 catPos = XYtoXZ(cat);
-            if (catPos.x < min.x || catPos.x > max.x || catPos.z < min.z || catPos.z > max.z)
+            if (catPos.x < aabbMin.x || catPos.x > aabbMax.x || catPos.z < aabbMin.z || catPos.z > aabbMax.z)
             {
                 // coarse AABB check failed
                 //Debug.DrawLine(cat, cat + new Vector3(0.5f, 0.5f, 0), Color.rebeccaPurple);
                 continue;
             }
-            if (GeometryUtils.PointInPolygon(catPos, swizzledPos))
+            if (GeometryUtils.PointInPolygon(catPos, loopPositions))
             {
                 cat.OnEncircled();
                 //Debug.Log("encircled!");
@@ -243,7 +259,18 @@ public class RopeManager : MonoBehaviour
         return false;
     }
 
-
+    public bool OverlapCircle(Vector3 center, float radius)
+    {
+        for (int i = 0; i < numNodes - 1; i++)
+        {
+            //GeometryUtils.ClosestPointOnLineSegment(point, positions[i], positions[i + 1]);
+            if (Vector3.Distance(positions[i], center) <= radius)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private void OnDrawGizmos()
     {
