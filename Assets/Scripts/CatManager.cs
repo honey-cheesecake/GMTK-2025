@@ -41,7 +41,7 @@ public class CatManager : MonoBehaviour
         for (int i = 0; i < numCats; i++)
         {
             // spawn cat
-            GameObject catInstance = Instantiate(catPrefab, GetRandomPointInCamera(), Quaternion.identity);
+            GameObject catInstance = Instantiate(catPrefab, GetRandomPointInCamera() * 0.5f, Quaternion.identity);
             CatAI catAI = catInstance.GetComponent<CatAI>();
             Debug.Assert(catAI != null, "couldn't find CatAI");
 

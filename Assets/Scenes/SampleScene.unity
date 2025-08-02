@@ -1685,6 +1685,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 499247e10a7dfb84185be5e6f9b7dc17, type: 2}
   - {fileID: 11400000, guid: d65cd90eea9e88e419617c28c65d2c46, type: 2}
   - {fileID: 11400000, guid: b995ca7f8c6171242af61a2f41684452, type: 2}
+  - {fileID: 11400000, guid: fda7098634e084d4b9e01da4a5574894, type: 2}
   - {fileID: 11400000, guid: a78749c62db6ded4caaf8a48ea6ea8ba, type: 2}
 --- !u!4 &2014783401
 Transform:

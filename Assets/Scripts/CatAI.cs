@@ -114,7 +114,8 @@ public class CatAI : MonoBehaviour
 
         // visuals
         anim.speed = moveSpeed;
-        spriteRenderer.flipX = (targetPosition - transform.position).x < 0;
+        if (moveSpeed > 0 )
+            spriteRenderer.flipX = (targetPosition - transform.position).x < 0;
     }
 
     private void FleeFromMouse()
@@ -142,7 +143,8 @@ public class CatAI : MonoBehaviour
 
         // visuals
         anim.speed = moveSpeed;
-        spriteRenderer.flipX = (targetPosition - transform.position).x < 0;
+        if (moveSpeed > 0)
+            spriteRenderer.flipX = (targetPosition - transform.position).x < 0;
     }
 
     private void OnDrawGizmos()
