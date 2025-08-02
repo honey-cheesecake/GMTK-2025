@@ -31,14 +31,18 @@ public class CatManager : MonoBehaviour
 
     void SpawnCats()
     {
-        catchableCats.Clear();
+        if (catchableCats.Count >= numCats)
+        {
+            return;
+        }
+        //catchableCats.Clear();
         int totalWeight = 0;
         foreach (var cat in catStats)
         {
             totalWeight += cat.GetSpawnWeight();
         }
 
-        for (int i = 0; i < numCats; i++)
+        while (catchableCats.Count < numCats)
         {
             // spawn cat
             GameObject catInstance = Instantiate(catPrefab, GetRandomPointInCamera() * 0.5f, Quaternion.identity);
@@ -69,6 +73,7 @@ public class CatManager : MonoBehaviour
     public void SetCatUncatchable(CatAI cat)
     {
         catchableCats.Remove(cat);
+        SpawnCats();
     }
 
     public List<CatAI> getCatchableCats()
