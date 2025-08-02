@@ -20,4 +20,4 @@ MonoBehaviour:
   minMoveSpeed: 1.5
   maxMoveSpeed: 7.8
   runSpeed: 15.3
-  audioClip: {fileID: 8300000, guid: 8afac096ac81e9a4fa3066c4fd2c5aa1, type: 3}
+  audioClip: {fileID: 8300000, guid: a8a37714b1219204eb0a9e772844febf, type: 3}
