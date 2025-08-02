@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 095f0a3c77fb6bc4584a1bc73703379d, type: 3}
-  m_Name: Biker
+  m_Name: Cataclysm
   m_EditorClassIdentifier: 
   displayName: 
-  rarity: 1
-  size: 1.12
+  rarity: 2
+  size: 1
   description: 
-  sprites: {fileID: 7108339969198208228, guid: 02389a9469e7c054695c7362b184c6c1, type: 3}
-  minMoveSpeed: 11.6
-  maxMoveSpeed: 17.3
-  runSpeed: 26.5
+  sprites: {fileID: 7108339969198208228, guid: b5ec6e2add329a54a98575e91840624a, type: 3}
+  minMoveSpeed: 2.9
+  maxMoveSpeed: 15
+  runSpeed: 40
