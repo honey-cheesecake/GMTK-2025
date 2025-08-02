@@ -4,6 +4,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using Unity.XR.CoreUtils;
+using static UnityEditor.PlayerSettings;
 
 public class RopeManager : MonoBehaviour
 {
@@ -33,13 +35,7 @@ public class RopeManager : MonoBehaviour
     {
         UpdateRope();
         lineRenderer.SetPositions(positions);
-
-        // catManager.getAllCats()
-        // foreach
-        // {
-        // if encircled
-        // cat.OnEncircled()
-        // }
+        HandleCats();
     }
 
     void UpdateRope()
@@ -80,15 +76,153 @@ public class RopeManager : MonoBehaviour
             prevPositions[i] = positions[i];
         }
     }
+    void AABB(ref Vector3 min, ref Vector3 max)
+    {
+        min = positions[0];
+        max = positions[0];
+        foreach (var pos in positions)
+        {
+            min = Vector3.Min(min, pos);
+            max = Vector3.Max(max, pos);
+        }
+    }
+
+    void HandleCats()
+    {
+        // construct a new sublit with proper swizzle -----------------------------------------
+        List<Vector3> swizzledPos = new(); // PointInPolygon expects XZ swizzle
+        int small = 0;
+        int big = 0;
+        if (!FindClosedLoop(out small, out big))
+        {
+            // no loop; nothing to do
+            return;
+        }
+
+        for (int i = small; i <= big; i++)
+        {
+            swizzledPos.Add(XYtoXZ(positions[i]));
+        }
+
+        // find bounding box -----------------------------------------
+        Vector3 min = Vector3.zero;
+        Vector3 max = Vector3.zero;
+        AABB(ref min, ref max);
+        min = XYtoXZ(min);
+        max = XYtoXZ(max);
+
+        List<CatAI> cats = catManager.getAllCats();
+        //List<Vector3> cats = new();
+        //for (int x = -10; x < 10; x++)
+        //{
+        //    for (int y = -10; y < 10; y++)
+        //    {
+        //        cats.Add(new Vector3(x, y, 0));
+        //    }
+        //}
+
+        foreach (var cat in cats)
+        {
+            Vector3 catPos = XYtoXZ(cat.transform.position);
+            //Vector3 catPos = XYtoXZ(cat);
+            if (catPos.x < min.x || catPos.x > max.x || catPos.z < min.z || catPos.z > max.z)
+            {
+                // coarse AABB check failed
+                //Debug.DrawLine(cat, cat + new Vector3(0.5f, 0.5f, 0), Color.rebeccaPurple);
+                continue;
+            }
+            if (GeometryUtils.PointInPolygon(catPos, swizzledPos))
+            {
+                cat.OnEncircled();
+                //Debug.Log("encircled!");
+                //Debug.DrawLine(cat, cat + new Vector3(0.5f, 0.5f, 0), Color.red);
+            }
+            else
+            {
+                //Debug.DrawLine(cat, cat + new Vector3(0.5f, 0.5f, 0), Color.yellow);
+            }
+        }
+    }
+
+    Vector3 XYtoXZ(Vector3 v)
+    {
+        // change swizzle
+        return new Vector3(v.x, 0, v.y);
+    }
+
+    // segment 1: a-b
+    // segment 2: c-d
+    bool DoSegmentsIntersect(Vector3 a, Vector3 b, Vector3 c, Vector3 d)
+    {
+        return (Area2(a, b, c) * Area2(a, b, d) < 0) && (Area2(c, d, a) * Area2(c, d, b) < 0);
+    }
+
+    // https://stackoverflow.com/questions/3838329/how-can-i-check-if-two-segments-intersect
+    // points "a" and "b" forms the anchored segment.
+    // point "c" is the evaluated point
+    bool IsOnLeft(Vector3 a, Vector3 b, Vector3 c)
+    {
+        return Area2(a, b, c) > 0;
+    }
+
+    bool IsOnRight(Vector3 a, Vector3 b, Vector3 c)
+    {
+        return Area2(a, b, c) < 0;
+    }
+
+    bool IsCollinear(Vector3 a, Vector3 b, Vector3 c)
+    {
+        return Area2(a, b, c) == 0;
+    }
+
+    // calculates the triangle's size (formed by the "anchor" segment and additional point)
+    float Area2(Vector3 a, Vector3 b, Vector3 c)
+    {
+        return (b.x - a.x) * (c.y - a.y) -
+               (c.x - a.x) * (b.y - a.y);
+    }
+
+    // returns the indices which form a polygon
+    bool FindClosedLoop(out int small, out int big)
+    {
+        // forward
+        for (int i = 1; i < numNodes; i++)
+        {
+            // backwards
+            for (int j = numNodes - 1; j > i + 1; j--)
+            {
+                if (DoSegmentsIntersect(positions[i], positions[i - 1],
+                    positions[j], positions[j - 1]))
+                {
+                    Debug.DrawLine(positions[i], positions[i - 1]);
+                    Debug.DrawLine(positions[j], positions[j - 1]);
+                    small = i;
+                    big = j;
+                    return true;
+                }
+            }
+        }
+        small = -1;
+        big = -1;
+        return false;
+    }
+
+
 
     private void OnDrawGizmos()
     {
-        if (positions != null)
+        if (!Application.isPlaying)
         {
-            foreach (var pos in positions)
-            {
-                Gizmos.DrawSphere(pos, 0.1f);
-            }
+            return;
+        }
+        if (positions == null)
+        {
+            return;
+        }
+
+        foreach (var pos in positions)
+        {
+            Gizmos.DrawSphere(pos, 0.1f);
         }
     }
 }

@@ -225,7 +225,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10.48
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -497,7 +497,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.01
+    widthMultiplier: 0.05
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -566,12 +566,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f76493aa46526b048a80f72d7857083d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  length: 5
-  numNodes: 10
-  constraintSteps: 1
+  length: 20
+  numNodes: 40
   lineRenderer: {fileID: 2071161158}
   cam: {fileID: 519420031}
-  catManager: {fileID: 0}
+  catManager: {fileID: 2014783400}
 --- !u!4 &2071161160
 Transform:
   m_ObjectHideFlags: 0
