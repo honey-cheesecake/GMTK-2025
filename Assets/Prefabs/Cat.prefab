@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3954022396832994621}
   - component: {fileID: 3980800531908104326}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 1176066146162063011}
   - component: {fileID: 9126182881439120281}
   - component: {fileID: 3694371853784078439}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cat
   m_TagString: Cat
   m_Icon: {fileID: 0}
@@ -138,6 +138,12 @@ MonoBehaviour:
   moveSpeed: 10
   speedVariance: 10
   changeDirectionInterval: 1
+  targetPosition: {x: 0, y: 0, z: 0}
+  timeSinceLastDirectionChange: 0
+  circleCastRadius: 0.92
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!58 &9126182881439120281
 CircleCollider2D:
   m_ObjectHideFlags: 0

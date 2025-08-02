@@ -14,19 +14,29 @@ public class CatAI : MonoBehaviour
     [Header("Cat position variables")]
     [SerializeField] Vector3 targetPosition;
     [SerializeField] float timeSinceLastDirectionChange;
+
+    [Header("Collision avoidance")]
+    [SerializeField] float circleCastRadius;
+    [SerializeField] LayerMask layerMask;
     //private float waitTimer = 0f;
 
     //if cat has hit wall
-    private bool hitWall = false;
+    //private bool hitWall = false;
+    private CatManager catManager;
 
     //private float timeSinceLastDirectionChange;
 
+    void Setup(CatManager catManager)
+    {
+        this.catManager = catManager;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        MoveRandomly();
-        Debug.Log(transform.position);
+        UpdateTargetPosition();
+        //MoveRandomly();
+        //Debug.Log(transform.position);
     }
 
     // Update is called once per frame
@@ -44,22 +54,30 @@ public class CatAI : MonoBehaviour
     private void MoveRandomly()
     {
 
-        if (hitWall)
-        {
-            PickTargetAwayFromWall();
-            //return;
-        }
-
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+        //if (hitWall)
+        //{
+        //    PickTargetAwayFromWall();
+        //    //return;
+        //}
 
         // Check if it's time to change direction
         timeSinceLastDirectionChange += Time.deltaTime;
-
         if (timeSinceLastDirectionChange > changeDirectionInterval)
         {
             UpdateTargetPosition();
         }
+        else
+        {
+            // Check if it's about to hit a wall or cat
+            RaycastHit2D hit = Physics2D.CircleCast(transform.position, circleCastRadius, targetPosition - transform.position, moveSpeed * Time.deltaTime, layerMask);
+            if (hit.collider)
+            {
+                UpdateTargetPosition();
+            }
+        }
         
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+    
     }
 
     private void UpdateTargetPosition()
@@ -80,56 +98,65 @@ public class CatAI : MonoBehaviour
         // Reset the timer for the next direction change
         timeSinceLastDirectionChange = 0.0f;
 
-        hitWall = false;
+        //hitWall = false;
     }
 
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
 
-        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Cat"))
-        {
-            hitWall = true;
-            //Debug.Log("Hit wall - stopping movement");
-        }
-    }
+    //    if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Cat"))
+    //    {
+    //        hitWall = true;
+    //        //Debug.Log("Hit wall - stopping movement");
+    //    }
+    //}
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Cat"))
-        {
-            // Object moved away from wall, can resume movement
-            hitWall = false;
-        }
-    }
+    //private void OnCollisionExit2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Cat"))
+    //    {
+    //        // Object moved away from wall, can resume movement
+    //        hitWall = false;
+    //    }
+    //}
 
     
-    private void PickTargetAwayFromWall()
+    //private void PickTargetAwayFromWall()
+    //{
+    //    Vector3 currentPos = transform.position;
+    //    Vector3 newTarget;
+    //    int attempts = 0;
+    //    int maxAttempts = 10;
+
+    //    do
+    //    {
+    //        // Generate random target
+    //        float randomX = Random.Range(-20f, 20f);
+    //        float randomY = Random.Range(-10f, 10f);
+    //        newTarget = new Vector3(randomX, randomY, 0f);
+    //        attempts++;
+    //    }
+    //    while (Vector3.Distance(currentPos, newTarget) < 3f && attempts < maxAttempts); // Ensure target is reasonably far away
+
+    //    targetPosition = newTarget;
+
+    //    // Calculate the angle in degrees
+    //    float angle2 = Mathf.Atan2(targetPosition.y, targetPosition.x) * Mathf.Rad2Deg;
+
+    //    // Reset the timer for the next direction change
+    //    timeSinceLastDirectionChange = 0.0f;
+
+    //    Debug.Log("Moving away from wall to new target");
+    //}
+
+    private void OnDrawGizmos()
     {
-        Vector3 currentPos = transform.position;
-        Vector3 newTarget;
-        int attempts = 0;
-        int maxAttempts = 10;
+        Gizmos.color = Color.blueViolet;
+        Gizmos.DrawWireSphere(transform.position, circleCastRadius);
 
-        do
-        {
-            // Generate random target
-            float randomX = Random.Range(-20f, 20f);
-            float randomY = Random.Range(-10f, 10f);
-            newTarget = new Vector3(randomX, randomY, 0f);
-            attempts++;
-        }
-        while (Vector3.Distance(currentPos, newTarget) < 3f && attempts < maxAttempts); // Ensure target is reasonably far away
+        Gizmos.DrawLine(transform.position, targetPosition);
 
-        targetPosition = newTarget;
-
-        // Calculate the angle in degrees
-        float angle2 = Mathf.Atan2(targetPosition.y, targetPosition.x) * Mathf.Rad2Deg;
-
-        // Reset the timer for the next direction change
-        timeSinceLastDirectionChange = 0.0f;
-
-        Debug.Log("Moving away from wall to new target");
     }
 
 }
