@@ -7,8 +7,8 @@ public class CatAI : MonoBehaviour
 
     // waawaawaw
     [Header("Cat speed variables")]
-    [SerializeField] float moveSpeed = 5.0f;
-    [SerializeField] float speedVariance = 2f;
+    [SerializeField] float minMoveSpeed = 5.0f;
+    [SerializeField] float maxMoveSpeed = 10.0f;
     [SerializeField] float changeDirectionInterval = 2.0f;
 
     [Header("Cat position variables")]
@@ -23,6 +23,7 @@ public class CatAI : MonoBehaviour
     //if cat has hit wall
     //private bool hitWall = false;
     private CatManager catManager;
+    private float moveSpeed;
 
     //private float timeSinceLastDirectionChange;
 
@@ -91,8 +92,7 @@ public class CatAI : MonoBehaviour
         float angle2 = Mathf.Atan2(targetPosition.y, targetPosition.x) * Mathf.Rad2Deg;
 
         //speed variance
-        float randomSpeed = Random.Range(-(speedVariance), speedVariance);
-        moveSpeed += randomSpeed;
+        moveSpeed = Random.Range(minMoveSpeed, maxMoveSpeed);
 
 
         // Reset the timer for the next direction change

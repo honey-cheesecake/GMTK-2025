@@ -135,8 +135,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreManager: {fileID: 0}
-  moveSpeed: 10
-  speedVariance: 10
+  minMoveSpeed: 5
+  maxMoveSpeed: 40
   changeDirectionInterval: 1
   targetPosition: {x: 0, y: 0, z: 0}
   timeSinceLastDirectionChange: 0
