@@ -3,9 +3,6 @@ using UnityEngine.InputSystem;
 
 public class CatAI : MonoBehaviour
 {
-    //Should probably be talking to ScoreManager to tell when a cat is removed
-    [SerializeField] ScoreManager scoreManager;
-
     // waawaawaw
     [Header("Cat speed variables")]
     [SerializeField] float minMoveSpeed = 5.0f;
@@ -21,13 +18,15 @@ public class CatAI : MonoBehaviour
     [SerializeField] LayerMask layerMask;
 
     private CatManager catManager;
+    ScoreManager scoreManager;
     private float moveSpeed;
 
     //private float timeSinceLastDirectionChange;
 
-    public void Setup(CatManager catManager)
+    public void Setup(CatManager catManager, ScoreManager scoreManager)
     {
         this.catManager = catManager;
+        this.scoreManager = scoreManager;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

@@ -5,23 +5,31 @@ using UnityEngine.InputSystem;
 public class CatManager : MonoBehaviour
 {
     [SerializeField] RopeManager ropeManager;
+    [SerializeField] ScoreManager scoreManager;
     [SerializeField] Camera cam;
+    [SerializeField] [Range(1, 100)] int numCats;
+    [SerializeField] GameObject catPrefab;
 
     InputAction mousePosAction;
+    List<CatAI> catList;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         mousePosAction = InputSystem.actions.FindAction("MousePos");
 
-        List<CatAI> cats = getAllCats();
-        Debug.Log("total number of cats: " + cats.Count);
-
-        foreach (CatAI cat in cats)
+        catList = new List<CatAI>();
+        for (int i = 0; i < numCats; i++)
         {
-            cat.Setup(this);
-            Debug.Log("Cat Name and cat Pos: " + cat.name + " " + cat.transform.position);
+            GameObject catInstance = Instantiate(catPrefab, GetRandomPointInCamera(), Quaternion.identity);
+            CatAI catAI = catInstance.GetComponent<CatAI>();
+            Debug.Assert(catAI != null, "couldn't find CatAI");
+            catList.Add(catAI);
+            catAI.Setup(this, scoreManager);
         }
+
+        //List<CatAI> cats = getAllCats();
+        //Debug.Log("total number of cats: " + cats.Count);
 
     }
 
