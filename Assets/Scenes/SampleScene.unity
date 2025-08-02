@@ -1675,6 +1675,9 @@ MonoBehaviour:
   cam: {fileID: 519420031}
   numCats: 14
   catPrefab: {fileID: 7822338023374751114, guid: c7055394c0064a54f8463d46bb21cfa6, type: 3}
+  catStats:
+  - {fileID: 11400000, guid: 39afe732fa4feba4c8e13745593340c0, type: 2}
+  - {fileID: 11400000, guid: 1566b98fc044f594ab0187c1acd24891, type: 2}
 --- !u!4 &2014783401
 Transform:
   m_ObjectHideFlags: 0

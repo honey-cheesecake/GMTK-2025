@@ -6,8 +6,6 @@ public class CatAI : MonoBehaviour
 {
     // waawaawaw
     [Header("Cat speed variables")]
-    [SerializeField] float minMoveSpeed = 5.0f;
-    [SerializeField] float maxMoveSpeed = 10.0f;
     [SerializeField] float changeDirectionInterval = 2.0f;
 
     [Header("Cat position variables")]
@@ -25,13 +23,16 @@ public class CatAI : MonoBehaviour
     private CatManager catManager;
     ScoreManager scoreManager;
     private float moveSpeed;
+    private CatStats stats;
 
     //private float timeSinceLastDirectionChange;
 
     // called by the CatManager when this cat is instantiated
     public void Setup(CatStats stats, CatManager catManager, ScoreManager scoreManager)
     {
+        this.stats = stats;
         spriteLibrary.spriteLibraryAsset = stats.SpriteLibraryAsset;
+
         this.catManager = catManager;
         this.scoreManager = scoreManager;
     }
@@ -104,7 +105,7 @@ public class CatAI : MonoBehaviour
         } while (catManager.CircleCastRope(transform.position, targetPosition, circleCastRadius) && attempts < maxAttempts);
 
         //speed variance
-        moveSpeed = Random.Range(minMoveSpeed, maxMoveSpeed);
+        moveSpeed = Random.Range(stats.MinMoveSpeed, stats.MaxMoveSpeed);
 
         // Reset the timer for the next direction change
         timeSinceLastDirectionChange = 0.0f;
@@ -128,7 +129,7 @@ public class CatAI : MonoBehaviour
             && attempts < maxAttempts);
 
         //speed variance
-        moveSpeed = maxMoveSpeed;
+        moveSpeed = stats.RunSpeed;
 
         // Reset the timer for the next direction change
         timeSinceLastDirectionChange = 0.0f;
