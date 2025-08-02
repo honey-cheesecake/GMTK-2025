@@ -6,8 +6,8 @@ using System;
 
 public class ScoreManager : MonoBehaviour
 {
-    public float timeRemaining;
-    public int score = 0;
+    [SerializeField] float timeRemaining;
+    int score = 0;
 
     [SerializeField] CatManager catManager;
     [SerializeField] GameObject gameOverScreen;
@@ -15,6 +15,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] TextMeshProUGUI finalScoreText;
 
+    bool isGameRunning = true;
 
     void Start()
     {
@@ -26,20 +27,33 @@ public class ScoreManager : MonoBehaviour
     private void Update()
     {
         timeRemaining -= Time.deltaTime;
-        if (timeRemaining <= 0 || catManager.getCatchableCats().Count == 0)
+        if (isGameRunning) 
         {
-            GetScore();
-            gameOverScreen.SetActive(true);
-            Debug.Log("gameOver");
+            if (timeRemaining <= 0 || catManager.getCatchableCats().Count == 0)
+            {
+                isGameRunning = false;
+                score = GetFinalScore();
+                UpdateScoreText();
+                gameOverScreen.SetActive(true);
+                Debug.Log("gameOver");
+            }
         }
         UpdateTimeRemainingText();
+    }
+
+    public void AddToScore(int change)
+    {
+        Debug.Assert(change >= 0);
+        score += change;
         UpdateScoreText();
     }
 
-
-    public float GetScore()
+    int GetFinalScore()
     {
-        score = score + ((int)timeRemaining * 5);
+        if (timeRemaining >= 0)
+        {
+            return score + ((int)timeRemaining * 5);
+        }
         return score;
     }
 

@@ -45,7 +45,7 @@ public class CatAI : MonoBehaviour
 
     public void OnEncircled()
     {
-        scoreManager.score = scoreManager.score + 10;
+        scoreManager.AddToScore(10);
         catManager.SetCatUncatchable(this);
         Destroy(this.gameObject);
     }   

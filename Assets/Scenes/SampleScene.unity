@@ -894,7 +894,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeRemaining: 60
-  score: 0
   catManager: {fileID: 2014783400}
   gameOverScreen: {fileID: 1532121904}
   timeRemainingText: {fileID: 2099894716}
@@ -1419,7 +1418,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1532121905
 MonoBehaviour:
   m_ObjectHideFlags: 0
