@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 095f0a3c77fb6bc4584a1bc73703379d, type: 3}
   m_Name: Mackerel
   m_EditorClassIdentifier: 
-  displayName: 
+  displayName: basic
   rarity: 0
   size: 0.97
   description: 
@@ -20,3 +20,4 @@ MonoBehaviour:
   minMoveSpeed: 4
   maxMoveSpeed: 8
   runSpeed: 12.8
+  audioClip: {fileID: 8300000, guid: 2e7432267f65ff24ca4df8dc81709016, type: 3}

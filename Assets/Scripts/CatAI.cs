@@ -20,11 +20,16 @@ public class CatAI : MonoBehaviour
     [SerializeField] Animator anim;
     [SerializeField] SpriteLibrary spriteLibrary;
     [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] AudioClip audioClip;
 
     private CatManager catManager;
     ScoreManager scoreManager;
     private float moveSpeed;
-    private CatStats stats;
+    public CatStats stats;
+    //private AudioSource audioSource;
+    //private SoundsScript soundsScript;
+
+
 
     //private float timeSinceLastDirectionChange;
 
@@ -34,14 +39,26 @@ public class CatAI : MonoBehaviour
         this.stats = stats;
         spriteLibrary.spriteLibraryAsset = stats.SpriteLibraryAsset;
         transform.localScale = Vector3.one * stats.Size;
+        this.audioClip = stats.audioClip;
 
         this.catManager = catManager;
         this.scoreManager = scoreManager;
+
+        
+
+        //this.soundsScript = soundsScript;
+        //audioSource = GetComponent<AudioSource>();
+        //audioSource.AudioResource = audioClip;
+
+        //this.audioClip = stats.audioClip;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //AudioManager audioManager = FindObjectOfType<AudioManager>();
+        //AudioSource audioSource = audioManager.GetComponent<AudioSource>();
+        //audioSource.PlayOneShot(audioClip, 0.7F);
         anim.SetBool("IsRunning", false);
         UpdateTargetPosition();
     }
@@ -49,15 +66,19 @@ public class CatAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //audioSource.PlayOneShot(audioClip, 0.7F);
         UpdateTargetPositionIfNeeded();
         MoveTowardTarget();
     }
 
     public void OnEncircled()
     {
+        //soundsScript.PlayCatSound(audioClip);
+        scoreManager.PlayCatSound(this.audioClip);
         scoreManager.AddToScore(10);
         catManager.SetCatUncatchable(this);
         Destroy(this.gameObject);
+
     }   
 
     private void UpdateTargetPositionIfNeeded()

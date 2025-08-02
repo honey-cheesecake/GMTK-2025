@@ -14,6 +14,10 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI timeRemainingText;
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] TextMeshProUGUI finalScoreText;
+    [SerializeField] AudioSource audioSource;
+
+    // /[Header("Sound Script")]
+    //[SerializeField] soundsScript soundScript;
 
     bool isGameRunning = true;
 
@@ -27,7 +31,7 @@ public class ScoreManager : MonoBehaviour
     private void Update()
     {
         timeRemaining -= Time.deltaTime;
-        if (isGameRunning) 
+        if (isGameRunning)
         {
             if (timeRemaining <= 0 || catManager.getCatchableCats().Count == 0)
             {
@@ -46,6 +50,7 @@ public class ScoreManager : MonoBehaviour
         Debug.Assert(change >= 0);
         score += change;
         UpdateScoreText();
+        //PlayCatSound(clip);
     }
 
     int GetFinalScore()
@@ -68,6 +73,14 @@ public class ScoreManager : MonoBehaviour
         //var timeSpan = TimeSpan.FromSeconds(timeRemaining);
         scoreText.text = string.Format(score + " points");
         finalScoreText.text = string.Format(score + " points");
+    }
+    
+    public void PlayCatSound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip, 1f);
+        }
     }
 
 

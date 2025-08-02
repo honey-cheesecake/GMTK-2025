@@ -4,14 +4,16 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-public class audioManager : MonoBehaviour
+public class AudioManager : MonoBehaviour
 {
-    public static audioManager Instance;
+    public static AudioManager Instance;
 
     [SerializeField] Slider masterVolumeSlider;
     [SerializeField] float currentMasterVolume;
     [SerializeField] float previousVolume = 1f;
     [SerializeField] AudioMixer audioMixer;
+
+    AudioSource audioSource;
 
     void Awake()
     {
@@ -33,6 +35,8 @@ public class audioManager : MonoBehaviour
     {
         InitializeSlider();
         ApplyCurrentVolume();
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -86,7 +90,7 @@ public class audioManager : MonoBehaviour
         UpdateSliders();
         SaveVolumeSettings();
     }
-    
+
     void ApplyCurrentVolume()
     {
         ChangeVolume("MasterVolume", currentMasterVolume);
@@ -101,8 +105,16 @@ public class audioManager : MonoBehaviour
 
     void LoadVolumeSettings()
     {
-        currentMasterVolume = PlayerPrefs.GetFloat("MasterVolume", 1f); 
+        currentMasterVolume = PlayerPrefs.GetFloat("MasterVolume", 1f);
         previousVolume = PlayerPrefs.GetFloat("PreviousVolume", 1f);
     }
     
+    public void PlayCatSound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
+    }
+
 }

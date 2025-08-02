@@ -13,6 +13,7 @@ public class CatStats : ScriptableObject
     [SerializeField] [Range(0f, 20f)] float minMoveSpeed;
     [SerializeField] [Range(0f, 20f)] float maxMoveSpeed;
     [SerializeField] [Range(0f, 40f)] float runSpeed;
+    [SerializeField] public AudioClip audioClip;
 
     public SpriteLibraryAsset SpriteLibraryAsset { get { return sprites; } }
     public float MinMoveSpeed { get {  return minMoveSpeed; } }
@@ -20,6 +21,7 @@ public class CatStats : ScriptableObject
     public float RunSpeed { get {  return runSpeed; } }
     public RarityType Rarity { get {  return rarity; } }
     public float Size { get {  return size; } }
+    public AudioClip AudioClip { get { return audioClip; } }
 
     public int GetSpawnWeight()
     {

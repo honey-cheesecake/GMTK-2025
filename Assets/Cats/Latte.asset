@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 095f0a3c77fb6bc4584a1bc73703379d, type: 3}
   m_Name: Latte
   m_EditorClassIdentifier: 
-  displayName: 
+  displayName: basic
   rarity: 1
   size: 1.19
   description: 
@@ -20,3 +20,4 @@ MonoBehaviour:
   minMoveSpeed: 1.5
   maxMoveSpeed: 7.8
   runSpeed: 15.3
+  audioClip: {fileID: 8300000, guid: 8afac096ac81e9a4fa3066c4fd2c5aa1, type: 3}

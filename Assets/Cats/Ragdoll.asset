@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 095f0a3c77fb6bc4584a1bc73703379d, type: 3}
   m_Name: Ragdoll
   m_EditorClassIdentifier: 
-  displayName: 
+  displayName: basic
   rarity: 0
   size: 1
   description: 
@@ -20,3 +20,4 @@ MonoBehaviour:
   minMoveSpeed: 2.3
   maxMoveSpeed: 6.5
   runSpeed: 9
+  audioClip: {fileID: 8300000, guid: 23ff14bc7885f26418b7df5cef42516d, type: 3}
