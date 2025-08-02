@@ -26,9 +26,9 @@ public class CatStats : ScriptableObject
         switch (rarity)
         {
             case RarityType.Common:
-                return 10;
+                return 8;
             case RarityType.Rare:
-                return 5;
+                return 3;
             case RarityType.EasterEgg:
             default:
                 return 1;
