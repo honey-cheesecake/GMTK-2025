@@ -352,6 +352,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
+  anim: {fileID: 4444502798881678312}
   spriteLibrary: {fileID: 7816770417816360088}
 --- !u!58 &9126182881439120281
 CircleCollider2D:

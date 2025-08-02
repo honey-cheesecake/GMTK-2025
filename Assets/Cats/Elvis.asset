@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Elvis
   m_EditorClassIdentifier: 
   displayName: 
-  sprite: {fileID: 0}
-  moveSpeed: 0
+  description: 
+  sprites: {fileID: 7108339969198208228, guid: 736e3442826cb1f4298723abdb981113, type: 3}
+  minMoveSpeed: 0
+  maxMoveSpeed: 0

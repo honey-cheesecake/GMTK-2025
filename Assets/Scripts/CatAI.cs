@@ -19,6 +19,7 @@ public class CatAI : MonoBehaviour
     [SerializeField] LayerMask layerMask;
 
     [Header("Component References")]
+    [SerializeField] Animator anim;
     [SerializeField] SpriteLibrary spriteLibrary;
 
     private CatManager catManager;
@@ -38,6 +39,7 @@ public class CatAI : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        anim.SetBool("IsRunning", false);
         UpdateTargetPosition();
     }
 
@@ -90,6 +92,7 @@ public class CatAI : MonoBehaviour
 
     private void UpdateTargetPosition()
     {
+        anim.SetBool("IsRunning", false);
         // Generate a new random target position within the bounds of your game world
         int attempts = 0;
         int maxAttempts = 10;
@@ -109,6 +112,7 @@ public class CatAI : MonoBehaviour
 
     private void FleeFromMouse()
     {
+        anim.SetBool("IsRunning", true);
         // Generate a new random target position within the bounds of your game world
         int attempts = 0;
         int maxAttempts = 10;

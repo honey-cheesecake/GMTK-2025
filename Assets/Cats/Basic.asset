@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Basic
   m_EditorClassIdentifier: 
   displayName: 
-  sprite: {fileID: 0}
-  moveSpeed: 0
+  description: 
+  sprites: {fileID: 7108339969198208228, guid: 3ce48712a51a4094393bd3deae7c2db6, type: 3}
+  minMoveSpeed: 0
+  maxMoveSpeed: 0
