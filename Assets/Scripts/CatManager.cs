@@ -9,6 +9,7 @@ public class CatManager : MonoBehaviour
     [SerializeField] Camera cam;
     [SerializeField] [Range(1, 100)] int numCats;
     [SerializeField] GameObject catPrefab;
+    [SerializeField] CatStats[] catStats;
 
     InputAction mousePosAction;
     List<CatAI> catchableCats; // cats do a lil animation before despawning, and we shouldn't allow the player to double dip
@@ -24,8 +25,9 @@ public class CatManager : MonoBehaviour
             GameObject catInstance = Instantiate(catPrefab, GetRandomPointInCamera(), Quaternion.identity);
             CatAI catAI = catInstance.GetComponent<CatAI>();
             Debug.Assert(catAI != null, "couldn't find CatAI");
+
             catchableCats.Add(catAI);
-            catAI.Setup(this, scoreManager);
+            catAI.Setup(catStats[Random.Range(0, catStats.Length)], this, scoreManager);
         }
         Debug.Log("total number of cats: " + catchableCats.Count);
     }

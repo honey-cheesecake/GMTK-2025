@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.U2D.Animation;
 
 public class CatAI : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class CatAI : MonoBehaviour
     [SerializeField] float circleCastRadius;
     [SerializeField] LayerMask layerMask;
 
+    [Header("Component References")]
+    [SerializeField] SpriteLibrary spriteLibrary;
+
     private CatManager catManager;
     ScoreManager scoreManager;
     private float moveSpeed;
@@ -24,8 +28,9 @@ public class CatAI : MonoBehaviour
     //private float timeSinceLastDirectionChange;
 
     // called by the CatManager when this cat is instantiated
-    public void Setup(CatManager catManager, ScoreManager scoreManager)
+    public void Setup(CatStats stats, CatManager catManager, ScoreManager scoreManager)
     {
+        spriteLibrary.spriteLibraryAsset = stats.SpriteLibraryAsset;
         this.catManager = catManager;
         this.scoreManager = scoreManager;
     }
