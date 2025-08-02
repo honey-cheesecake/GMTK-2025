@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095f0a3c77fb6bc4584a1bc73703379d, type: 3}
+  m_Name: Black
+  m_EditorClassIdentifier: 
+  displayName: 
+  rarity: 0
+  size: 1
+  description: 
+  sprites: {fileID: 7108339969198208228, guid: 40aa308ae21fe9148a9e4c89da76e3ba, type: 3}
+  minMoveSpeed: 4
+  maxMoveSpeed: 8
+  runSpeed: 12.8
