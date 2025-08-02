@@ -19,4 +19,18 @@ public class CatStats : ScriptableObject
     public float RunSpeed { get {  return runSpeed; } }
     public RarityType Rarity { get {  return rarity; } }
 
+    public int GetSpawnWeight()
+    {
+        switch (rarity)
+        {
+            case RarityType.Common:
+                return 10;
+            case RarityType.Rare:
+                return 5;
+            case RarityType.EasterEgg:
+            default:
+                return 1;
+        }
+    }
+
 }

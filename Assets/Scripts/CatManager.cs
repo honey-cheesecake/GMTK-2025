@@ -20,22 +20,49 @@ public class CatManager : MonoBehaviour
         mousePosAction = InputSystem.actions.FindAction("MousePos");
 
         catchableCats = new List<CatAI>();
-        for (int i = 0; i < numCats; i++)
-        {
-            GameObject catInstance = Instantiate(catPrefab, GetRandomPointInCamera(), Quaternion.identity);
-            CatAI catAI = catInstance.GetComponent<CatAI>();
-            Debug.Assert(catAI != null, "couldn't find CatAI");
-
-            catchableCats.Add(catAI);
-            catAI.Setup(catStats[Random.Range(0, catStats.Length)], this, scoreManager);
-        }
-        Debug.Log("total number of cats: " + catchableCats.Count);
+        SpawnCats();
     }
 
     // Update is called once per frame  cat.name cat.name
     void Update()
     {
         
+    }
+
+    void SpawnCats()
+    {
+        catchableCats.Clear();
+        int totalWeight = 0;
+        foreach (var cat in catStats)
+        {
+            totalWeight += cat.GetSpawnWeight();
+        }
+
+        for (int i = 0; i < numCats; i++)
+        {
+            // spawn cat
+            GameObject catInstance = Instantiate(catPrefab, GetRandomPointInCamera(), Quaternion.identity);
+            CatAI catAI = catInstance.GetComponent<CatAI>();
+            Debug.Assert(catAI != null, "couldn't find CatAI");
+
+            // book keeping
+            catchableCats.Add(catAI);
+
+            // choose which cat to spawn (weighted random)
+            CatStats randomCat = null;
+            int r = Random.Range(0, totalWeight);
+            foreach (var cat in catStats)
+            {
+                if (r < cat.GetSpawnWeight())
+                {
+                    randomCat = cat;
+                    break;
+                }
+                r -= cat.GetSpawnWeight();
+            }
+            catAI.Setup(randomCat, this, scoreManager);
+        }
+        Debug.Log("total number of cats: " + catchableCats.Count);
     }
 
     // TODO turn this into a delegate that we pass into catAI.Setup as a callback
