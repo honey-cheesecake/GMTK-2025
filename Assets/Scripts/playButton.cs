@@ -19,8 +19,7 @@ public class playButton : MonoBehaviour
 
     public void ChangeScene(string sceneName)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        //Debug.Log("please work");
+        SceneManager.LoadScene(sceneName);
     }
     public void ReleadScene()
     {
