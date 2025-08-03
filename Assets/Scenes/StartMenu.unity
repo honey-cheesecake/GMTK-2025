@@ -687,8 +687,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -4781373940957465942, guid: 72bb2b108a82b744bacbbc622298e97f, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -722,7 +722,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &597741596
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1383,7 +1383,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 992714987}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: ba6a72a57d63a594d9a98d015413ab91, type: 2}
   m_audioClip: {fileID: 0}
@@ -2645,6 +2645,8 @@ MonoBehaviour:
   previousVolume: 1
   audioMixer: {fileID: 24100000, guid: ba6a72a57d63a594d9a98d015413ab91, type: 2}
   sfxMixerGroup: {fileID: 24300002, guid: ba6a72a57d63a594d9a98d015413ab91, type: 2}
+  musicMixerGroup: {fileID: 24300002, guid: ba6a72a57d63a594d9a98d015413ab91, type: 2}
+  backgroundMusic: {fileID: 8300000, guid: 3d9b243d110f1b844a6ae1de909998dd, type: 3}
 --- !u!82 &2123135992
 AudioSource:
   m_ObjectHideFlags: 0

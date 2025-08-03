@@ -13,6 +13,13 @@ public class AudioManager : MonoBehaviour
     [SerializeField] float previousVolume = 1f;
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] AudioMixerGroup sfxMixerGroup;
+    [SerializeField] AudioMixerGroup musicMixerGroup;
+    
+    [Header("Music")]
+    [SerializeField] AudioClip backgroundMusic;
+    
+    private AudioSource sfxAudioSource;  // For sound effects
+    private AudioSource musicAudioSource; // For background music
 
     
 
@@ -24,27 +31,61 @@ public class AudioManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Persist across scenes
+            DontDestroyOnLoad(gameObject); 
             LoadVolumeSettings();
-
-            // Get AudioSource and link to mixer
-            audioSource = GetComponent<AudioSource>();
-            if (audioSource == null)
-            {
-                audioSource = gameObject.AddComponent<AudioSource>();
-            }
-            
-            // Link AudioSource to mixer group
-            if (sfxMixerGroup != null && audioSource != null)
-            {
-                audioSource.outputAudioMixerGroup = sfxMixerGroup;
-            }
+            SetupAudioSources();
+            StartBackgroundMusic();
         }
         else
         {
             Destroy(gameObject);
         }
 
+    }
+
+    void SetupAudioSources()
+    {
+        
+        AudioSource[] sources = GetComponents<AudioSource>();
+        
+        //if not audio source make both
+        if (sources.Length == 0)
+        {
+            sfxAudioSource = gameObject.AddComponent<AudioSource>();
+            musicAudioSource = gameObject.AddComponent<AudioSource>();
+        }
+        //if none for music make one for music
+        else if (sources.Length == 1)
+        {
+            sfxAudioSource = sources[0];
+            musicAudioSource = gameObject.AddComponent<AudioSource>();
+        }
+       
+        else
+        {
+            sfxAudioSource = sources[0];
+            musicAudioSource = sources[1];
+        }
+        
+
+        if (sfxMixerGroup != null)
+            sfxAudioSource.outputAudioMixerGroup = sfxMixerGroup;
+        
+
+        if (musicMixerGroup != null)
+            musicAudioSource.outputAudioMixerGroup = musicMixerGroup;
+        
+        musicAudioSource.loop = true; 
+        musicAudioSource.playOnAwake = false;
+    }
+
+    void StartBackgroundMusic()
+    {
+        if (backgroundMusic != null && musicAudioSource != null && !musicAudioSource.isPlaying)
+        {
+            musicAudioSource.clip = backgroundMusic;
+            musicAudioSource.Play();
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
