@@ -19,6 +19,10 @@ public class ScoreManager : MonoBehaviour
     // /[Header("Sound Script")]
     //[SerializeField] soundsScript soundScript;
 
+    //Sound variables
+    private Dictionary<AudioClip, float> lastPlayTime = new Dictionary<AudioClip, float>();
+    private float minTimeBetweenSameSounds = 0.2f;
+
     bool isGameRunning = true;
 
     void Start()
@@ -77,10 +81,14 @@ public class ScoreManager : MonoBehaviour
     
     public void PlayCatSound(AudioClip clip)
     {
-        if (clip != null && audioSource != null)
+        if (lastPlayTime.ContainsKey(clip) && 
+            Time.time - lastPlayTime[clip] < minTimeBetweenSameSounds)
         {
-            audioSource.PlayOneShot(clip, 1f);
+            return; // Don't play if too recent
         }
+        
+        audioSource.PlayOneShot(clip);
+        lastPlayTime[clip] = Time.time;
     }
 
 
