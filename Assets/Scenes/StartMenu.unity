@@ -2549,9 +2549,7 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: ba6a72a57d63a594d9a98d015413ab91, type: 2}
   sfxMixerGroup: {fileID: 24300002, guid: ba6a72a57d63a594d9a98d015413ab91, type: 2}
   musicMixerGroup: {fileID: 24300002, guid: ba6a72a57d63a594d9a98d015413ab91, type: 2}
-  backgroundMusic: {fileID: 8300000, guid: 3d9b243d110f1b844a6ae1de909998dd, type: 3}
-  sfxAudioSource: {fileID: 2123135994}
-  musicAudioSource: {fileID: 2123135992}
+  backgroundMusic: {fileID: 8300000, guid: b4eb76cb4aa487445b3c37931622aa43, type: 3}
 --- !u!82 &2123135992
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2559,11 +2557,11 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2123135990}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: ba6a72a57d63a594d9a98d015413ab91, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 3d9b243d110f1b844a6ae1de909998dd, type: 3}
+  m_Resource: {fileID: 8300000, guid: b4eb76cb4aa487445b3c37931622aa43, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
