@@ -22,6 +22,10 @@ public class CatAI : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] AudioClip audioClip;
 
+    [Header("Flee Behavior")]
+    [SerializeField] float fleeCooldown = 1f;
+    private float lastFleeTime;
+
     private CatManager catManager;
     ScoreManager scoreManager;
     private float moveSpeed;
@@ -92,9 +96,10 @@ public class CatAI : MonoBehaviour
         }
 
         // flee from mouse if it's too close
-        if (Vector3.Distance(transform.position, catManager.MousePosition()) <= circleCastRadius)
+        if (Vector3.Distance(transform.position, catManager.MousePosition()) <= circleCastRadius && Time.time - lastFleeTime > fleeCooldown)
         {
             FleeFromMouse();
+            lastFleeTime = Time.time;
             return;
         }
 
