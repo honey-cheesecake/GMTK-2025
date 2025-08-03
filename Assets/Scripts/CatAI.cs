@@ -79,7 +79,7 @@ public class CatAI : MonoBehaviour
         catManager.SetCatUncatchable(this);
         Destroy(this.gameObject);
 
-    }   
+    }
 
     private void UpdateTargetPositionIfNeeded()
     {
