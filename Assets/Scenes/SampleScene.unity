@@ -1318,7 +1318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3906e420cedddfc499c1abae02bfe5fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeRemaining: 10
+  timeRemaining: 60
   catManager: {fileID: 2014783400}
   gameOverScreen: {fileID: 1532121904}
   timeRemainingText: {fileID: 2099894716}
