@@ -85,7 +85,9 @@ public class CatAI : MonoBehaviour
         catManager.SetCatUncatchable(this);
 
         var scoreParticleInstance = Instantiate(scoreParticle, transform.position, Quaternion.identity);
-        scoreParticleInstance.GetComponentInChildren<TextMeshPro>().text = stats.GetScore().ToString();
+        var textComponent = scoreParticleInstance.GetComponentInChildren<TextMeshPro>();
+        textComponent.text = stats.GetScore().ToString();
+        textComponent.fontSize *= stats.GetScoreTextSizeMult();
         Destroy(scoreParticleInstance, 2f );
 
         Destroy(this.gameObject);

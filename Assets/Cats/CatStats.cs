@@ -54,4 +54,20 @@ public class CatStats : ScriptableObject
         }
     }
 
+    public float GetScoreTextSizeMult()
+    {
+        if (isDog)
+            return 2;
+        switch (rarity)
+        {
+            case RarityType.Common:
+                return 1;
+            case RarityType.Rare:
+                return 1.5f;
+            case RarityType.EasterEgg:
+            default:
+                return 2;
+        }
+    }
+
 }
