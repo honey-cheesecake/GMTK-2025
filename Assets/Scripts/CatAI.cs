@@ -79,7 +79,7 @@ public class CatAI : MonoBehaviour
     {
         //soundsScript.PlayCatSound(audioClip);
         scoreManager.PlayCatSound(this.audioClip);
-        scoreManager.AddToScore(10);
+        scoreManager.AddToScore(stats.GetScore());
         catManager.SetCatUncatchable(this);
         Destroy(this.gameObject);
 
