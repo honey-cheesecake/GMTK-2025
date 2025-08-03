@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using Unity.XR.CoreUtils;
-using static UnityEditor.PlayerSettings;
+//using static UnityEditor.PlayerSettings;
 using System.Drawing;
 
 public class RopeManager : MonoBehaviour
