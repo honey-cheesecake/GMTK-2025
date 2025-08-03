@@ -12,6 +12,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] float currentMasterVolume;
     [SerializeField] float previousVolume = 1f;
     [SerializeField] AudioMixer audioMixer;
+    [SerializeField] AudioMixerGroup sfxMixerGroup;
+
+    
 
     AudioSource audioSource;
 
@@ -23,11 +26,25 @@ public class AudioManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject); // Persist across scenes
             LoadVolumeSettings();
+
+            // Get AudioSource and link to mixer
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
+            
+            // Link AudioSource to mixer group
+            if (sfxMixerGroup != null && audioSource != null)
+            {
+                audioSource.outputAudioMixerGroup = sfxMixerGroup;
+            }
         }
         else
         {
             Destroy(gameObject);
         }
+
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

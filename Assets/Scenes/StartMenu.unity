@@ -2546,6 +2546,7 @@ MonoBehaviour:
   currentMasterVolume: 1
   previousVolume: 1
   audioMixer: {fileID: 24100000, guid: ba6a72a57d63a594d9a98d015413ab91, type: 2}
+  sfxMixerGroup: {fileID: 24300002, guid: ba6a72a57d63a594d9a98d015413ab91, type: 2}
 --- !u!82 &2123135992
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2555,7 +2556,7 @@ AudioSource:
   m_GameObject: {fileID: 2123135990}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: ba6a72a57d63a594d9a98d015413ab91, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
