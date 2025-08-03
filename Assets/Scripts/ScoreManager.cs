@@ -59,7 +59,7 @@ public class ScoreManager : MonoBehaviour
         {
             return;
         }
-        Debug.Assert(change >= 0);
+        //Debug.Assert(change >= 0);
         score += change;
         UpdateScoreText();
         //PlayCatSound(clip);

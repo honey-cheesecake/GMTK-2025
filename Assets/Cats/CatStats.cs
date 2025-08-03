@@ -41,7 +41,7 @@ public class CatStats : ScriptableObject
     public int GetScore()
     {
         if (isDog)
-            return -30;
+            return -100;
         switch (rarity)
         {
             case RarityType.Common:

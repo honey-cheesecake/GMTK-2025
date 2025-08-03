@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.U2D.Animation;
@@ -21,6 +22,7 @@ public class CatAI : MonoBehaviour
     [SerializeField] SpriteLibrary spriteLibrary;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] AudioClip audioClip;
+    [SerializeField] GameObject scoreParticle;
 
     [Header("Flee Behavior")]
     [SerializeField] float fleeCooldown = 1f;
@@ -81,6 +83,11 @@ public class CatAI : MonoBehaviour
         scoreManager.PlayCatSound(this.audioClip);
         scoreManager.AddToScore(stats.GetScore());
         catManager.SetCatUncatchable(this);
+
+        var scoreParticleInstance = Instantiate(scoreParticle, transform.position, Quaternion.identity);
+        scoreParticleInstance.GetComponentInChildren<TextMeshPro>().text = stats.GetScore().ToString();
+        Destroy(scoreParticleInstance, 2f );
+
         Destroy(this.gameObject);
 
     }

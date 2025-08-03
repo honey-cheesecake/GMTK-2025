@@ -266,6 +266,8 @@ MonoBehaviour:
   spriteLibrary: {fileID: 7816770417816360088}
   spriteRenderer: {fileID: 89277159560403799}
   audioClip: {fileID: 0}
+  scoreParticle: {fileID: 6615357413133068186, guid: eccdf9f76cfaa494097592f7a29659ac, type: 3}
+  fleeCooldown: 1
   stats: {fileID: 0}
 --- !u!58 &9126182881439120281
 CircleCollider2D:
