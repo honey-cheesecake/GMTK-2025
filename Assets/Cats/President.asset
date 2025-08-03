@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: President
   m_EditorClassIdentifier: 
   displayName: 
-  rarity: 0
+  rarity: 2
   size: 1.47
   description: 
   sprites: {fileID: 7108339969198208228, guid: add151a04369ad8489b0656dccbae75d, type: 3}
