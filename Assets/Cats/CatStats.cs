@@ -5,6 +5,7 @@ using UnityEngine.U2D.Animation;
 public class CatStats : ScriptableObject
 {
     public enum RarityType { Common, Rare, EasterEgg }
+    [SerializeField] bool isDog;
     [SerializeField] string displayName;
     [SerializeField] RarityType rarity;
     [SerializeField] [Range(0.1f, 3f)] float size = 1;
@@ -39,6 +40,8 @@ public class CatStats : ScriptableObject
 
     public int GetScore()
     {
+        if (isDog)
+            return -30;
         switch (rarity)
         {
             case RarityType.Common:
