@@ -37,4 +37,18 @@ public class CatStats : ScriptableObject
         }
     }
 
+    public int GetScore()
+    {
+        switch (rarity)
+        {
+            case RarityType.Common:
+                return 10;
+            case RarityType.Rare:
+                return 30;
+            case RarityType.EasterEgg:
+            default:
+                return 100;
+        }
+    }
+
 }
