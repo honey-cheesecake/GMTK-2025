@@ -34,23 +34,31 @@ public class ScoreManager : MonoBehaviour
 
     private void Update()
     {
-        timeRemaining -= Time.deltaTime;
         if (isGameRunning)
         {
+            timeRemaining -= Time.deltaTime;
+            UpdateTimeRemainingText();
+
             if (timeRemaining <= 0 || catManager.getCatchableCats().Count == 0)
             {
                 isGameRunning = false;
+
+                timeRemaining = 0;
+                UpdateTimeRemainingText();
+                
                 score = GetFinalScore();
                 UpdateScoreText();
                 gameOverScreen.SetActive(true);
-                Debug.Log("gameOver");
             }
-        }
-        UpdateTimeRemainingText();
+        }  
     }
 
     public void AddToScore(int change)
     {
+        if (!isGameRunning)
+        {
+            return;
+        }
         Debug.Assert(change >= 0);
         score += change;
         UpdateScoreText();
