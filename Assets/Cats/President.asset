@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: President
   m_EditorClassIdentifier: 
   displayName: 
-  rarity: 2
+  rarity: 0
   size: 1.47
   description: 
   sprites: {fileID: 7108339969198208228, guid: add151a04369ad8489b0656dccbae75d, type: 3}
-  minMoveSpeed: 0
-  maxMoveSpeed: 0
-  runSpeed: 0
+  minMoveSpeed: 1
+  maxMoveSpeed: 1
+  runSpeed: 1
   audioClip: {fileID: 8300000, guid: 558e49c95a0c75b4dafe84a722b9a7ed, type: 3}
